@@ -1,2 +1,2 @@
-# typst-templates
-Typst Templates
+# typst-packages
+Typst Packages (majorly my template)
