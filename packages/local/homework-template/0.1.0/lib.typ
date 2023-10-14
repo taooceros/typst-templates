@@ -42,7 +42,7 @@
 #let nsg = symbol("⊴")
 #let subgroup = nsg;
 
-#let iprod(inner)=$lr(angle.l #inner angle.r)$
+#let iprod(x,y)=$lr(angle.l #x, #y angle.r)$
 
 
 #let id = math.bb("1");
@@ -54,6 +54,78 @@
 #let cplus = sym.plus.circle
 
 #import "@preview/ctheorems:1.0.0": *
+
+#import "@preview/showybox:2.0.1": showybox
+
+#let thmbox(
+  identifier,
+  head,
+  supplement: auto,
+  fill: none,
+  stroke: none,
+  inset: 1.2em,
+  radius: 0.3em,
+  breakable: false,
+  padding: (top: 0.2em, bottom: 0.75em, left: 0.5em, right: 0.5em),
+  namefmt: x => [#x],
+  titlefmt: strong,
+  bodyfmt: x => x,
+  separator: [:#h(0.2em)],
+  base: "heading",
+  base_level: none,
+) = {
+  if supplement == auto {
+    supplement = head
+  }
+  let boxfmt(name, number, body, title: auto) = {
+    if title == auto {
+      title = head
+    }
+
+    if not number == [] {
+      title += " " + number + separator
+    } else if name != none {
+      title += separator
+    }
+    
+    if not name == none {
+      name = [ #namefmt(name)]
+    } else {
+      name = title
+      title = none
+    }
+
+    title = titlefmt(title)
+    body = bodyfmt(body)
+
+    showybox(
+      title-style: (
+        boxed-style: (
+          anchor: (
+            x: left,
+            y: horizon
+          ),
+          radius: (top-left: 10pt, bottom-right: 10pt, rest: 0pt),
+          offset: (x: 0.5em)
+        )
+      ),
+      frame: (
+        title-color: fill.darken(50%),
+        body-color: fill.lighten(60%),
+        footer-color: fill.lighten(80%),
+        border-color: fill.darken(70%),
+        radius: (top-left: 10pt, bottom-right: 10pt, rest: 0pt)
+      ),
+      title: [#name],
+    )[
+      #pad(..padding)[
+        #title#body
+      ]
+    ]
+  }
+
+  return thmenv(identifier, supplement, base, base_level, boxfmt)
+}
 
 #let thm = thmbox(
   "theorem",
@@ -128,8 +200,8 @@
   "remark",
   "Remark",
   base: "theorem",
-  fill: orange.lighten(50%),
-  stroke: orange.darken(20%),
+  fill: orange,
+  stroke: orange,
 ).with(numbering: none)
 
 #let todo = thmbox("todo", "TODO", base: "theorem", fill: yellow.lighten(50%)).with(numbering: none)
