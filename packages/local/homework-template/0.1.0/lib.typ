@@ -16,17 +16,17 @@
   set block(below: 1.5em, above: 1.5em)
   
   set par(leading: 1em)
-  
+
   // Title row.
   align(center)[
-    #block(text(weight: 700, 1.75em, title))
+    #block(text(font: "quicksand", weight: 700, 1.75em, title))
   ]
   
   // Author information.
   pad(top: 0.8em, bottom: 0.8em, x: 2em, grid(
     columns: (1fr,) * calc.min(3, authors.len()),
     gutter: 1em,
-    ..authors.map(author => align(center, strong(author))),
+    ..authors.map(author => text(font: "Innovate")[#align(center, strong(author))]),
   ))
   
   // Main body.
@@ -83,9 +83,7 @@
     }
 
     if not number == [] {
-      title += " " + number + separator
-    } else if name != none {
-      title += separator
+      title += " " + number
     }
     
     if not name == none {
@@ -116,10 +114,10 @@
         border-color: fill.darken(70%),
         radius: (top-left: 10pt, bottom-right: 10pt, rest: 0pt)
       ),
-      title: [#name],
+      title: text(font: "Quicksand", weight: "regular")[#name],
     )[
       #pad(..padding)[
-        #title#body
+        #text(font: "Quicksand", weight: "bold", title) #h(0.5em) #body
       ]
     ]
   }
@@ -148,7 +146,7 @@
   stroke: rgb("#eeffee").darken(10%),
 )
 
-#let corollary = thmplain("corollary", "Corollary", base: "theorem", titlefmt: strong)
+#let corollary = thmbox("corollary", "Corollary", base: "theorem", fill: teal, titlefmt: strong)
 
 #let definition = thmbox(
   "definition",
