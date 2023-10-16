@@ -166,7 +166,7 @@
 
 #let example = thmplain("example", "Example").with(numbering: none)
 
-#let solution = thmbox("solution", "Solution", stroke: green.lighten(50%))
+#let solution = thmbox("solution", "Solution", fill: green.lighten(50%))
 #let exproof = thmenv(
   "proof",
   "Proof",
