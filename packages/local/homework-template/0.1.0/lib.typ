@@ -5,7 +5,7 @@
   // Set the document's basic properties.
   set document(author: authors, title: title)
   set page(numbering: "1", number-align: center)
-  set text(font: "Linux Libertine", lang: "en", weight: 300)
+  set text(font: "Charis SIL", lang: "en", weight: 300)
   set par(justify: false)
   
   set heading(numbering: "1.1")
