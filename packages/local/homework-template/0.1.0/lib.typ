@@ -58,7 +58,7 @@
 
 #let cplus = sym.plus.circle
 
-#import "@preview/ctheorems:1.0.0": *
+#import "@preview/ctheorems:1.1.0": *
 
 #import "@preview/showybox:2.0.1": showybox
 
@@ -113,12 +113,12 @@
       radius: (top-left: 10pt, bottom-right: 10pt, rest: 0pt),
     ), title: text(font: "Quicksand", weight: "regular")[#name])[
       #pad(..padding)[
-        #text(font: "Quicksand", weight: "bold", title) #h(0.5em) #body
+        #body
       ]
     ]
   }
   
-  return thmenv(identifier, supplement, base, base_level, boxfmt)
+  return thmenv(identifier, base, base_level, boxfmt)
 }
 
 #let thm = thmbox(
@@ -171,7 +171,6 @@
 #let solution = thmbox("solution", "Solution", fill: green.lighten(50%))
 #let exproof = thmenv(
   "proof",
-  "Proof",
   none,
   none,
   (name, number, body, color: black) => box(inset: 1em)[
