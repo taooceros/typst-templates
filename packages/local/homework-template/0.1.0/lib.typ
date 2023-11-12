@@ -107,7 +107,7 @@
       offset: (x: 0.5em),
     )), frame: (
       title-color: fill.darken(50%),
-      body-color: fill.lighten(60%),
+      body-color: fill.lighten(90%),
       footer-color: fill.lighten(80%),
       border-color: fill.darken(70%),
       radius: (top-left: 10pt, bottom-right: 10pt, rest: 0pt),
