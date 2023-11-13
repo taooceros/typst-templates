@@ -7,31 +7,36 @@
   set page(numbering: "1", number-align: center)
   set text(font: "Charis SIL", lang: "en", weight: 300)
   set par(justify: false)
-  
+   
   set heading(numbering: "1.1")
-  
+   
   // Set paragraph spacing.
   show par: set block(above: 1.2em, below: 1.2em)
-  
+   
   set block(below: 1.5em, above: 1.5em)
-  
+   
   set par(leading: 1em)
-
+  
   // Title row.
   align(center)[
     #block(text(font: "quicksand", weight: 700, 1.75em, title))
   ]
-  
+   
   // Author information.
-  pad(top: 0.8em, bottom: 0.8em, x: 2em, grid(
-    columns: (1fr,) * calc.min(3, authors.len()),
-    gutter: 1em,
-    ..authors.map(author => text(font: "Innovate")[#align(center, strong(author))]),
-  ))
-  
+  pad(
+    top: 0.8em,
+    bottom: 0.8em,
+    x: 2em,
+    grid(
+      columns: (1fr,) * calc.min(3, authors.len()),
+      gutter: 1em,
+      ..authors.map(author => text(font: "Innovate")[#align(center, strong(author))]),
+    ),
+  )
+   
   // Main body.
   set par(justify: true)
-  
+   
   body
 }
 
@@ -42,7 +47,7 @@
 #let nsg = symbol("⊴")
 #let subgroup = nsg;
 
-#let iprod(x,y)=$lr(angle.l #x, #y angle.r)$
+#let iprod(x, y)=$lr(angle.l #x, #y angle.r)$
 
 #let argmin = math.op("argmin", limits: true)
 #let argmax = math.op("argmax", limits: true)
@@ -56,7 +61,7 @@
 
 #let cplus = sym.plus.circle
 
-#import "@preview/ctheorems:1.0.0": *
+#import "@preview/ctheorems:1.1.0": *
 
 #import "@preview/showybox:2.0.1": showybox
 
@@ -84,48 +89,39 @@
     if title == auto {
       title = head
     }
-
+    
     if not number == [] {
       title += " " + number
     }
-    
+     
     if not name == none {
-      name = [ #namefmt(name)]
+      name = [ #namefmt(name) ]
     } else {
       name = title
       title = none
     }
-
+    
     title = titlefmt(title)
     body = bodyfmt(body)
-
-    showybox(
-      title-style: (
-        boxed-style: (
-          anchor: (
-            x: left,
-            y: horizon
-          ),
-          radius: (top-left: 10pt, bottom-right: 10pt, rest: 0pt),
-          offset: (x: 0.5em)
-        )
-      ),
-      frame: (
-        title-color: fill.darken(50%),
-        body-color: fill.lighten(60%),
-        footer-color: fill.lighten(80%),
-        border-color: fill.darken(70%),
-        radius: (top-left: 10pt, bottom-right: 10pt, rest: 0pt)
-      ),
-      title: text(font: "Quicksand", weight: "regular")[#name],
-    )[
+    
+    showybox(title-style: (boxed-style: (
+      anchor: (x: left, y: horizon),
+      radius: (top-left: 10pt, bottom-right: 10pt, rest: 0pt),
+      offset: (x: 0.5em),
+    )), frame: (
+      title-color: fill.darken(50%),
+      body-color: fill.lighten(90%),
+      footer-color: fill.lighten(80%),
+      border-color: fill.darken(70%),
+      radius: (top-left: 10pt, bottom-right: 10pt, rest: 0pt),
+    ), title: text(font: "Quicksand", weight: "regular")[#name])[
       #pad(..padding)[
-        #text(font: "Quicksand", weight: "bold", title) #h(0.5em) #body
+        #body
       ]
     ]
   }
-
-  return thmenv(identifier, supplement, base, base_level, boxfmt)
+  
+  return thmenv(identifier, base, base_level, boxfmt)
 }
 
 #let thm = thmbox(
@@ -148,7 +144,13 @@
   stroke: rgb("#eeffee").darken(10%),
 )
 
-#let corollary = thmbox("corollary", "Corollary", base: "theorem", fill: teal, titlefmt: strong)
+#let corollary = thmbox(
+  "corollary",
+  "Corollary",
+  base: "theorem",
+  fill: teal,
+  titlefmt: strong,
+)
 
 #let definition = thmbox(
   "definition",
@@ -171,12 +173,11 @@
 #let solution = thmbox("solution", "Solution", fill: green.lighten(50%))
 #let exproof = thmenv(
   "proof",
-  "Proof",
   none,
   none,
   (name, number, body, color: black) => box(inset: 1em)[
     #let name = if name != none { smallcaps[ (#name) ] } else {}
-    
+     
     #smallcaps[*Proof #number* #name:] #body
     #h(1fr) $square$
   ],
@@ -196,12 +197,16 @@
   bodyfmt: body => [#body #h(1fr) $square$],
 ).with(numbering: none)
 
-#let remark = thmbox(
-  "remark",
-  "Remark",
-  base: "theorem",
-  fill: orange,
-  stroke: orange,
-).with(numbering: none)
+#let remark = thmbox("remark", "Remark", base: "theorem", fill: orange, stroke: orange).with(numbering: none)
 
 #let todo = thmbox("todo", "TODO", base: "theorem", fill: yellow.lighten(50%)).with(numbering: none)
+
+#let tryref(label) = {
+  locate(loc=>{
+    if query(label, loc).len() == 0 {
+      return str(label)
+    } else {
+      return ref(label)
+    }
+  })
+}
