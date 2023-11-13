@@ -44,6 +44,9 @@
 
 #let iprod(x,y)=$lr(angle.l #x, #y angle.r)$
 
+#let argmin = math.op("argmin", limits: true)
+#let argmax = math.op("argmax", limits: true)
+
 
 #let id = math.bb("1");
 
@@ -136,8 +139,7 @@
 #let proposition = thmbox(
   "theorem",
   "Proposition",
-  fill: rgb("#FDFCDC"),
-  stroke: rgb("#FDFCDC").darken(20%),
+  fill: yellow.lighten(10%),
 )
 #let lemma = thmbox(
   "theorem",
