@@ -125,7 +125,7 @@
 }
 
 #let thm = thmbox(
-  "theorem",
+  "Theorem",
   smallcaps[Theorem],
   base_level: 2,
   fill: fuchsia.lighten(90%),
@@ -133,12 +133,12 @@
 )
 
 #let proposition = thmbox(
-  "theorem",
+  "Proposition",
   "Proposition",
   fill: yellow.lighten(10%),
 )
 #let lemma = thmbox(
-  "theorem",
+  "Lemma",
   "Lemma",
   fill: rgb("#eeffee").lighten(50%),
   stroke: rgb("#eeffee").darken(10%),
@@ -187,7 +187,7 @@
   "proof",
   "Proof",
   base: "theorem",
-  bodyfmt: body => [#body #h(1fr) $square$],
+  bodyfmt: body => [#body #h(1fr) #linebreak() #h(1fr) $square$]
 ).with(numbering: none)
 
 #let proofidea = thmplain(
